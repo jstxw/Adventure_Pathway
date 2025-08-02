@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from core.config import settings
 
 app = FastAPI(
     title='FastAPI',
@@ -12,7 +12,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=settings.ALLOWED_ORIGIN,
     allow_credentials=True, # allow api endpoints to be set
     allow_methods=["*"], #allow post, get, put
     allow_headers=["*"],
