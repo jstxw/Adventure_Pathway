@@ -7,10 +7,10 @@ class Settings(BaseSettings):
     API_PREFIX: str = '/api'
     DEBUG: bool = False 
     DATABASE_URL: str = ""
-    ALLOWED_ORIGIN: str = ""
+    ALLOWED_ORIGINS: str = ""
     OPENAI_API_KEY: str = ""
     
-    @field_validator("ALLOWED_ORIGIN")
+    @field_validator("ALLOWED_ORIGINS")
     def parsed_allowed_origins(cls, v: str) -> List[str]:
         return v.split(',') if v else []
     
