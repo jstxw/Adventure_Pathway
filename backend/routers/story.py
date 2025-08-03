@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Cookie, Response, Backgro
 from sqlalchemy.orm import Session 
 from backend.db.database import get_db, SessionLocal
 from backend.models.story import Story, StoryNode
-from backend.models.job import StoryJob 
+from backend.models.job import StoryJob
 from backend.schemas.story import (CompleteStoryNodeResponse, CompleteStoryResponse, CreateStoryRequest)
 from backend.schemas.job import StoryJobResponse
 
@@ -41,3 +41,44 @@ def create_story(
         )
     db.add(job)
     db.commit()
+    
+    background_tasks.add_task(
+        generate_story_task,
+        job_id = job_id,
+        theme = request.theme, 
+        session_id = session_id,
+    )
+    
+    return job
+
+def generate_story_task(job_id: str, theme: str, session_id: str):
+    db = SessionLocal()
+    
+    try:
+        job = db.query(StoryJob).filter(StoryJob.job_id == job_id).first()
+        if not job:
+            return 
+        
+        try: 
+            job.status = 'Processing' # type: ignore
+            db.commit()
+            
+            story= {}
+            
+            job.story_id = 1 # type: ignore
+            job.status = "completed" # type: ignore
+            job.completed_at = datetime.now()# type: ignore
+            db.commit()
+            
+        except Exception as e: 
+            job.status = 'failed'# type: ignore
+            job.completed_at = datetime.now()# type: ignore
+            job.error = str(e)# type: ignore
+            db.commit()
+    finally:
+        db.close()
+
+            
+            
+            
+        
