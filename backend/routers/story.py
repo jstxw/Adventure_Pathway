@@ -3,11 +3,11 @@ from typing import Optional
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, Cookie, Response, BackgroundTasks
 from sqlalchemy.orm import Session 
-from backend.db.database import get_db, SessionLocal
-from backend.models.story import Story, StoryNode
-from backend.models.job import StoryJob
-from backend.schemas.story import (CompleteStoryNodeResponse, CompleteStoryResponse, CreateStoryRequest)
-from backend.schemas.job import StoryJobResponse
+from db.database import get_db, SessionLocal
+from models.story import Story, StoryNode
+from models.job import StoryJob
+from schemas.story import (CompleteStoryNodeResponse, CompleteStoryResponse, CreateStoryRequest)
+from schemas.job import StoryJobResponse
 
 router = APIRouter(
     prefix="/stories",
@@ -79,7 +79,7 @@ def generate_story_task(job_id: str, theme: str, session_id: str):
         db.close()
 
 
-@router.post('/{story_id}/complete ', response_model=CompleteStoryResponse)
+@router.get('/{story_id}/complete ', response_model=CompleteStoryResponse)
 def get_complete_story(story_id: int, db: Session = Depends(get_db)):
     story = db.query(Story).filter(Story.id ==story_id).first()
     if not story:

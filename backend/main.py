@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import settings
 
+from routers import story, job
+
 app = FastAPI(
     title='FastAPI',
     description='Adventure_Story',
@@ -17,6 +19,9 @@ app.add_middleware(
     allow_methods=["*"], #allow post, get, put
     allow_headers=["*"],
 )
+
+app.include_router(story.router, prefix=settings.API_PREFIX)
+app.include_router(job.router, prefix=settings.API_PREFIX)
 
 if __name__ == "__main__": #only run the following if ran only in this file
     import uvicorn
