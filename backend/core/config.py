@@ -6,7 +6,7 @@ from pydantic import field_validator
 class Settings(BaseSettings):
     API_PREFIX: str = '/api'
     DEBUG: bool = False 
-    DATABASE_URL: str = ""
+    DATABASE_URL: str = "sqlite:///./adventure_pathway.db"
     ALLOWED_ORIGINS: str = ""
     OPENAI_API_KEY: str = ""
     
