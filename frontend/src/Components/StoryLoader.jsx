@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import axios from "axios"; // ✅ Corrected import
+import axios from "axios";
 import LoadingStatus from "./LoadingStatus";
 
-const API_BASE_URL = "http://localhost:8000/api"; // Or your actual base URL
+const API_BASE_URL = "/api"; // Or your actual base URL
 
 function StoryLoader() {
   const { id } = useParams();
