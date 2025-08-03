@@ -25,11 +25,13 @@ function ThemeInput({ onSubmit }) {
               type="text"
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
-              placeholder=""
+              placeholder="Enter a theme (e.g: Pirates...)"
             />
           </div>
-          <button type="Submit">Submit</button>
-          {error && <p className="error">{error}</p>}
+          <button type="Submit" className="generate-btn">
+            Submit
+          </button>
+          {error && <p className="error-text">{error}</p>}
         </form>
       </div>
     );
