@@ -90,9 +90,26 @@ def get_complete_story(story_id: int, db: Session = Depends(get_db)):
     complete_story = build_complete_story_tree(db, story)
    
     return complete_story 
-
+#making sure input is a valid dictionary and build a tree in which we return to the frontend
 def build_complete_story_tree(db: Session, story: Story):
-    pass
+    nodes = db.query(StoryNode).filter(StoryNode.story_id == story.id).all()
+    
+    node_dict={}
+    for node in nodes:
+        node_response = CompleteStoryNodeResponse(
+            id=node.id, 
+            content=node.content,
+            is_ending=node.is_ending,
+            options=node.options
+        )
+        
+        
+        node_dict[node.id] = node_response
+        
+    root_node = next((node for nodes in nodes if node.is_root), None)
+        
+    
+    
             
             
         
