@@ -102,8 +102,6 @@ def build_complete_story_tree(db: Session, story: Story):
             is_ending=node.is_ending,
             options=node.options
         )
-        
-        
         node_dict[node.id] = node_response
         
     root_node = next((node for nodes in nodes if node.is_root), None)
