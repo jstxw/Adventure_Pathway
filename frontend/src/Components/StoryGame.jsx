@@ -20,7 +20,7 @@ function StoryGame({ story, onNewStory }) {
 
   useEffect(() => {
     if (currentNodeId && story && story.all_nodes) {
-      const node = story.all_nodes.find(n => n.id === currentNodeId);
+      const node = story.all_nodes[currentNodeId];
 
       if (node) {
         setCurrentNode(node);
