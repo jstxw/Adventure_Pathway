@@ -105,6 +105,19 @@ def build_complete_story_tree(db: Session, story: Story):
         node_dict[node.id] = node_response
         
     root_node = next((node for nodes in nodes if node.is_root), None)
+    if not root_node:
+        raise HTTPException(status_code=404, detail='Story Node Not Found')
+    
+    return CompleteStoryNodeResponse(
+        id=story.id,
+        title=story.title,
+        session_id=story.session_id,
+        created_at=story.created_at,
+        root_node=node_dict[root_node.id],
+        all_nodes=nodes_dict 
+        
+    )
+    
         
     
     
