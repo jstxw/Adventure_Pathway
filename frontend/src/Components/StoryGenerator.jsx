@@ -16,7 +16,7 @@ function StoryGenerator() {
   useEffect(() => {
     let pollInterval;
 
-    if (jobId && jobStatus === "processing") {
+    if (jobId && (jobStatus === "processing" || jobStatus === "pending")) {
       pollInterval = setInterval(() => {
         pollJobStatus(jobId);
       }, 5000);
@@ -51,7 +51,7 @@ function StoryGenerator() {
 
   const pollJobStatus = async (id) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/jobs/${id}`);
+      const response = await axios.get(`${API_BASE_URL}/job/${id}`);
       const { status, story_id, error: jobError } = response.data;
       setJobStatus(status);
 

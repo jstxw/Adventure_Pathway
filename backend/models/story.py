@@ -23,6 +23,6 @@ class StoryNode(Base):
     is_root = Column(Boolean, default=False)
     is_ending = Column(Boolean, default=False)
     is_winning_ending = Column(Boolean, default=False)
-    options = Column(JSON, default=list)
+    options = Column(JSON, default=list)  # type: ignore
     
     story = relationship('Story', back_populates='nodes')

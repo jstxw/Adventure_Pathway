@@ -61,12 +61,13 @@ def generate_story_task(job_id: str, theme: str, session_id: str):
             return 
         
         try: 
-            job.status = 'Processing' # type: ignore
+            job.status = 'processing' # type: ignore
             db.commit()
             
             story = StoryGenerator.generate_story(db, session_id, theme)
 
-            
+            # Refresh the job to ensure we have the latest data
+            db.refresh(job)
             job.story_id = story.id # type: ignore
             job.status = "completed" # type: ignore
             job.completed_at = datetime.now()# type: ignore
@@ -81,7 +82,7 @@ def generate_story_task(job_id: str, theme: str, session_id: str):
         db.close()
 
 
-@router.get('/{story_id}/complete ', response_model=CompleteStoryResponse)
+@router.get('/{story_id}/complete', response_model=CompleteStoryResponse)
 def get_complete_story(story_id: int, db: Session = Depends(get_db)):
     story = db.query(Story).filter(Story.id ==story_id).first()
     if not story:
@@ -104,17 +105,17 @@ def build_complete_story_tree(db: Session, story: Story):
         )
         node_dict[node.id] = node_response
         
-    root_node = next((node for nodes in nodes if node.is_root), None)
+    root_node = next((node for node in nodes if node.is_root), None)
     if not root_node:
         raise HTTPException(status_code=404, detail='Story Node Not Found')
     
-    return CompleteStoryNodeResponse(
+    return CompleteStoryResponse(
         id=story.id,
         title=story.title,
         session_id=story.session_id,
         created_at=story.created_at,
         root_node=node_dict[root_node.id],
-        all_nodes=nodes_dict 
+        all_nodes=node_dict 
         
     )
     
