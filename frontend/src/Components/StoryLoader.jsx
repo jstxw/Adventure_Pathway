@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import LoadingStatus from "./LoadingStatus";
+import StoryGame from "./StoryGame";
 
 const API_BASE_URL = "/api"; // Or your actual base URL
 
@@ -60,9 +61,7 @@ function StoryLoader() {
   if (story) {
     return (
       <div className="story-loader">
-        <h2>{story.title}</h2>
-        <p>{story.root_node.content}</p>
-        {/* You can map the rest of the story tree here */}
+        <StoryGame story={story} onNewStory={createNewStory} />{" "}
       </div>
     );
   }
