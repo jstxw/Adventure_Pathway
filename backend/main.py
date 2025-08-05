@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import settings
 
+# Import models to ensure they are registered with SQLAlchemy BEFORE importing database
+from models import story as story_model, job as job_model
+
 from routers import story, job
 from db.database import create_tables
 

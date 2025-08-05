@@ -1,12 +1,12 @@
 //display the node the user is currently on
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 
 function StoryGame({ story, onNewStory }) {
   const [currentNodeId, setCurrentNodeId] = useState(null);
   const [currentNode, setCurrentNode] = useState(null);
   const [options, setOptions] = useState([]);
-  const [isEnding, setIsEnding] = useState(False);
+  const [isEnding, setIsEnding] = useState(false);
   const [isWinningEnding, setIsWinningEnding] = useState(false);
 
   //check if the story is changing, and then when the story is loaded, it extracts the root node if and sets it to the current node if
@@ -20,16 +20,18 @@ function StoryGame({ story, onNewStory }) {
 
   useEffect(() => {
     if (currentNodeId && story && story.all_nodes) {
-      const node = story.all_node(currentNodeId);
+      const node = story.all_nodes.find(n => n.id === currentNodeId);
 
-      setCurrentNode(node);
-      setIsEnding(node.is_ending);
-      setIsWinningEnding(node.is_winning_ending);
+      if (node) {
+        setCurrentNode(node);
+        setIsEnding(node.is_ending);
+        setIsWinningEnding(node.is_winning_ending);
 
-      if (!node.is_ending && node.options && node.options.length > 0) {
-        setOptions(node.options);
-      } else {
-        setOptions([]);
+        if (!node.is_ending && node.options && node.options.length > 0) {
+          setOptions(node.options);
+        } else {
+          setOptions([]);
+        }
       }
     }
   }, [currentNodeId, story]); // render new options, is currentnodeid changes

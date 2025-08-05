@@ -13,29 +13,29 @@ function ThemeInput({ onSubmit }) {
       return;
     }
     onSubmit(theme);
-
-    return (
-      <div className="theme-input-container">
-        <h2> Generate Your Own Adventure</h2>
-        <p>Enter a theme:</p>
-
-        <form onSubmit={handleSubmit} className="">
-          <div className="input-group">
-            <input
-              type="text"
-              value={theme}
-              onChange={(e) => setTheme(e.target.value)}
-              placeholder="Enter a theme (e.g: Pirates...)"
-            />
-          </div>
-          <button type="Submit" className="generate-btn">
-            Submit
-          </button>
-          {error && <p className="error-text">{error}</p>}
-        </form>
-      </div>
-    );
   };
+
+  return (
+    <div className="theme-input-container">
+      <h2> Generate Your Own Adventure</h2>
+      <p>Enter a theme:</p>
+
+      <form onSubmit={handleSubmit} className="">
+        <div className="input-group">
+          <input
+            type="text"
+            value={theme}
+            onChange={(e) => setTheme(e.target.value)}
+            placeholder="Enter a theme (e.g: Pirates...)"
+          />
+        </div>
+        <button type="Submit" className="generate-btn">
+          Submit
+        </button>
+        {error && <p className="error-text">{error}</p>}
+      </form>
+    </div>
+  );
 }
 
 export default ThemeInput;
