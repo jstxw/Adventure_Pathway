@@ -257,6 +257,7 @@ main {
   background: rgba(255, 255, 255, 0.9);
   transition: var(--transition);
   font-family: 'Open Sans', sans-serif;
+  color: black
 }
 
 .input-group input:focus {
