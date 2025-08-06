@@ -16,18 +16,12 @@ class StoryGenerator:
 
     @classmethod
     def _get_llm(cls):
-        openai_api_key = os.getenv("OPENAI_API_KEY")
-        serviceurl = os.getenv("CHOREO_OPENAI_CONNECTION_SERVICEURL")
+        openai_api_key = os.getenv("CHOREO_OPENAICONNECTION_OPENAI_API_KEY")
+        serviceurl = os.getenv("CHOREO_OPENAICONNECTION_SERVICEURL")
 
         if openai_api_key and serviceurl:
-            return ChatOpenAI(model_name="gpt-4o-mini", openai_api_key=openai_api_key, openai_api_base=serviceurl)
-        elif openai_api_key:
-            return ChatOpenAI(model_name="gpt-4o-mini", openai_api_key=openai_api_key)
-        else:
-            raise ValueError("OPENAI_API_KEY environment variable is required")
-        
-
-    @classmethod
+            return ChatOpenAI(model="gpt-4o-mini", api_key=openai_api_key, base_url=serviceurl)
+       
     def generate_story(cls, db: Session, session_id: str, theme: str = "fantasy")-> Story:
         llm = cls._get_llm()
         story_parser = PydanticOutputParser(pydantic_object=StoryLLMResponse)
