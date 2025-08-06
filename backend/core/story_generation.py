@@ -22,6 +22,7 @@ class StoryGenerator:
         if openai_api_key and serviceurl:
             return ChatOpenAI(model="gpt-4o-mini", api_key=openai_api_key, base_url=serviceurl)
        
+    @classmethod
     def generate_story(cls, db: Session, session_id: str, theme: str = "fantasy")-> Story:
         llm = cls._get_llm()
         story_parser = PydanticOutputParser(pydantic_object=StoryLLMResponse)
