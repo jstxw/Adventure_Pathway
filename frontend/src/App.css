@@ -470,7 +470,7 @@ button::after {
   padding: 1.5rem;
   color: black;
   background: linear-gradient(135deg, #f8f9fa36 0%, #f8f9fa36 100%);
-  color: var(--text-dark);
+  color: white;
   border: 2px solid #dee2e623;
   border-radius: var(--border-radius-small);
   transition: var(--transition);
